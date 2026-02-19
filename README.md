@@ -77,9 +77,9 @@ CAMPUSES = [
 ## 🐛 Troubleshooting
 
 ### Browser runs too fast
-Increase `slow_mo` value in the script (line with `browser = p.chromium.launch(...)`):
+Increase `slow_mo` value in the script (line with `browser = p.webkit.launch(...)`):
 ```python
-browser = p.chromium.launch(headless=False, slow_mo=1000)  # 1 second delay
+browser = p.webkit.launch(headless=False, slow_mo=1000)  # 1 second delay
 ```
 
 ### Timeouts
@@ -93,7 +93,7 @@ The website may have changed. You'll need to:
 ### Run in headless mode
 For running without GUI (faster):
 ```python
-browser = p.chromium.launch(headless=True)
+browser = p.webkit.launch(headless=True)
 ```
 
 ## 📊 Output
