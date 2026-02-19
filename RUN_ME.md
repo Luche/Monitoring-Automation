@@ -42,8 +42,13 @@ Edit `config.py` if you need to:
 
 ### 3. Run the Automation
 
+Note that this folder is using uv as python dependency manager (https://github.com/astral-sh/uv).
 ```bash
 uv run binus_automation.py
+```
+If you use normal python, then run the script with:
+```bash
+python binus_automation.py
 ```
 
 The browser will open and you can watch the automation run!
@@ -78,7 +83,7 @@ browser = p.chromium.launch(headless=False, slow_mo=1000)  # 1 second delay
 ```
 
 ### Timeouts
-The script has long timeouts (60-120 seconds) for slow loading. If still timing out, increase timeout values.
+Majority of the script has no timeouts because slow website. Add timeouts if needed.
 
 ### Selectors not working
 The website may have changed. You'll need to:
