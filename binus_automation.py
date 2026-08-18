@@ -15,6 +15,7 @@ Workflow:
 from playwright.sync_api import sync_playwright, Page, Browser, BrowserContext
 import os
 from dotenv import load_dotenv
+from config import TERM, CAMPUSES
 
 # Load environment variables from .env file
 load_dotenv()
@@ -286,12 +287,6 @@ def main():
         return
 
     print(f"✅ Credentials loaded for: {USERNAME}")
-
-    # Configuration
-    TERM = "2025, Compact Semester"  # Change this to current term
-    CAMPUSES = [
-        "Binus Kemanggisan"
-    ]
 
     with sync_playwright() as p:
         # Launch WebKit browser (native macOS support)

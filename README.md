@@ -44,7 +44,10 @@ export BINUS_PASSWORD="your_password"
 
 ### 2. Update Configuration
 
-`config.py` is not currently used by `binus_automation.py`. To change settings, edit `binus_automation.py` directly — see `main()` for `TERM` and `CAMPUSES`.
+Edit `config.py` if you need to:
+- Change the term (currently "2025, Compact Semester")
+- Modify campus list
+- Adjust any other settings
 
 ### 3. Run the Automation
 
@@ -63,20 +66,18 @@ The browser will open and you can watch the automation run!
 
 ### Current Settings
 
-- **Term**: 2025, Even Semester
+- **Term**: 2025, Compact Semester
 - **Campuses**:
   - Binus Kemanggisan
-  - Binus Alam Sutera
 
 ### Changing Settings
 
-Open `binus_automation.py` and look for the `main()` function:
+Edit `config.py`:
 
 ```python
-TERM = "2025, Even Semester"  # Change this
+TERM = "2025, Compact Semester"  # Change this
 CAMPUSES = [
     "Binus Kemanggisan",  # Add/remove campuses
-    "Binus Alam Sutera"
 ]
 ```
 
