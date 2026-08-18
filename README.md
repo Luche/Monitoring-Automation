@@ -14,7 +14,7 @@ Automatically monitors lecture attendance for BINUS courses by:
 ### 0. Clone and Install Dependencies
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/Luche/Monitoring-Automation.git
 cd Monitoring-Automation
 uv sync
 uv run playwright install webkit
