@@ -21,3 +21,10 @@ test-results/
 playwright-report/
 playwright/.cache/
 screenshots/
+
+# Playwright
+node_modules/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/

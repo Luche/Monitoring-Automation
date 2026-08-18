@@ -11,6 +11,15 @@ Automatically monitors lecture attendance for BINUS courses by:
 
 ## 🚀 Quick Start
 
+### 0. Clone and Install Dependencies
+
+```bash
+git clone <repo-url>
+cd Monitoring-Automation
+uv sync
+uv run playwright install webkit
+```
+
 ### 1. Set Up Credentials
 
 Create a `.env` file in this directory:
@@ -35,10 +44,7 @@ export BINUS_PASSWORD="your_password"
 
 ### 2. Update Configuration
 
-Edit `config.py` if you need to:
-- Change the term (currently "2025, Even Semester")
-- Modify campus list
-- Adjust any other settings
+`config.py` is not currently used by `binus_automation.py`. To change settings, edit `binus_automation.py` directly — see `main()` for `TERM` and `CAMPUSES`.
 
 ### 3. Run the Automation
 

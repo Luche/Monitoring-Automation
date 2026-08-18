@@ -8,12 +8,11 @@ You can either:
 
 # Term configuration
 # Update this to match current academic term
-TERM = "2025, Even Semester"
+TERM = "2025, Compact Semester"
 
 # Campuses to monitor
 CAMPUSES = [
-    "Binus Kemanggisan",
-    "Binus Alam Sutera"
+    "Binus Kemanggisan"
 ]
 
 # Credentials (use environment variables instead if possible)

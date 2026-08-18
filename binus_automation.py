@@ -288,10 +288,9 @@ def main():
     print(f"✅ Credentials loaded for: {USERNAME}")
 
     # Configuration
-    TERM = "2025, Even Semester"  # Change this to current term
+    TERM = "2025, Compact Semester"  # Change this to current term
     CAMPUSES = [
-        "Binus Kemanggisan",
-        "Binus Alam Sutera"
+        "Binus Kemanggisan"
     ]
 
     with sync_playwright() as p:
