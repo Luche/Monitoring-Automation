@@ -1,22 +1,14 @@
 """
-Configuration for BINUS Monitoring Automation
+Settings for BINUS Monitoring Automation
 
-You can either:
-1. Set environment variables (recommended for security)
-2. Update the values below directly (not recommended for production)
+Only change the words between the quote marks.
+They must match the TERM and CAMPUS dropdowns on the Lecture Monitoring page exactly.
 """
 
-# Term configuration
-# Update this to match current academic term
+# Term to monitor
 TERM = "2025, Compact Semester"
 
-# Campuses to monitor
+# Campuses to monitor (to add one, copy a whole line and change the name)
 CAMPUSES = [
-    "Binus Kemanggisan"
+    "Binus Kemanggisan",
 ]
-
-# Credentials (use environment variables instead if possible)
-# Set BINUS_USERNAME and BINUS_PASSWORD in your environment
-# Or uncomment and fill these (but don't commit to git!)
-# USERNAME = "your_email@binus.ac.id"
-# PASSWORD = "your_password"
