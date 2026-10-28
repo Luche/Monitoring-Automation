@@ -13,12 +13,20 @@ Workflow:
 """
 
 from playwright.sync_api import sync_playwright, Page, Browser, BrowserContext
+import getpass
 import os
-from dotenv import load_dotenv
+from pathlib import Path
+import keyring
+from keyring.errors import KeyringError
+from dotenv import dotenv_values, load_dotenv, set_key, unset_key
 from config import TERM, CAMPUSES
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from .env file next to this script
+ENV_FILE = Path(__file__).with_name('.env')
+load_dotenv(ENV_FILE)
+
+# Name of the entry in the OS password store (Keychain / Credential Manager / Secret Service)
+KEYRING_SERVICE = 'binus-monitoring-automation'
 
 
 # JavaScript to execute on monitoring log page
@@ -267,24 +275,59 @@ def process_campus(page: Page, context: BrowserContext, campus: str, term: str):
     return total_monitored
 
 
+def save_password(username: str, password: str):
+    """Save password in the OS password store, or in .env if this computer has none"""
+    try:
+        keyring.set_password(KEYRING_SERVICE, username, password)
+    except KeyringError:
+        set_key(ENV_FILE, 'BINUS_PASSWORD', password)
+        ENV_FILE.chmod(0o600)
+        print("   ⚠ No password store found on this computer, password saved in .env instead")
+        return
+
+    if 'BINUS_PASSWORD' in dotenv_values(ENV_FILE):
+        unset_key(ENV_FILE, 'BINUS_PASSWORD')
+    print("   🔒 Password saved in your computer's password store")
+
+
+def load_password(username: str):
+    """Return BINUS_PASSWORD from the environment or .env, else from the OS password store"""
+    password = os.getenv('BINUS_PASSWORD')
+    if password:
+        return password
+    try:
+        return keyring.get_password(KEYRING_SERVICE, username)
+    except KeyringError:
+        return None
+
+
+def get_credentials():
+    """Return saved credentials, or ask for them and save them"""
+    username = os.getenv('BINUS_USERNAME')
+    password = load_password(username) if username else None
+
+    if username and password:
+        print(f"🔑 Saved login: {username}")
+        answer = input("   Press Enter to continue, or type C then Enter to change it: ")
+        if answer.strip().lower() != 'c':
+            # Move a plain-text password left in .env by older versions into the password store
+            if 'BINUS_PASSWORD' in dotenv_values(ENV_FILE):
+                save_password(username, password)
+            return username, password
+
+    print("\n🔑 Enter your BINUS login (it will be saved on this computer for next time)")
+    username = input("   BINUS email: ").strip()
+    password = getpass.getpass("   Password (nothing shows while you type, that's normal): ")
+    set_key(ENV_FILE, 'BINUS_USERNAME', username)
+    save_password(username, password)
+    return username, password
+
+
 def main():
     # Configuration
     BASE_URL = "https://acadservices.apps.binus.ac.id/"
 
-    # Get credentials from environment variables (loaded from .env file)
-    USERNAME = os.getenv('BINUS_USERNAME')
-    PASSWORD = os.getenv('BINUS_PASSWORD')
-
-    # Validate credentials
-    if not USERNAME or not PASSWORD:
-        print("❌ ERROR: Credentials not found!")
-        print("\nPlease create a .env file with:")
-        print("  BINUS_USERNAME=your_email@binus.ac.id")
-        print("  BINUS_PASSWORD=your_password")
-        print("\nOr copy from .env.example:")
-        print("  cp .env.example .env")
-        print("  # then edit .env with your credentials\n")
-        return
+    USERNAME, PASSWORD = get_credentials()
 
     print(f"✅ Credentials loaded for: {USERNAME}")
 
